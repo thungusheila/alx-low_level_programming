@@ -1,20 +1,20 @@
-#include "main.h"
-
-#include <stdio.h>
-
 #include <stdlib.h>
+
+
 
 /**
 
- * string_nconcat - A function that concatenates two strings
+ * *string_nconcat - concatenates 2 strings
 
- * @s1: An input pointer of the first string
+ * @s1: pointer to first string
 
- * @s2: An input pointer of the second string
+ * @s2: pointer to second string
 
- * @n: an input integer of number of string to concatenate
+ * @n: number of bytes to use from s2
 
- * Return: Apointer to concatened strings or NULL if it str is NULL
+ *
+
+ * Return: pointer to newly created string, else NULL if failure occurs
 
  */
 
@@ -22,66 +22,52 @@ char *string_nconcat(char *s1, char *s2, unsigned int n)
 
 {
 
-	char *new_str;
+char *str;
 
-	unsigned int i = 0, lens1 = 0, lens2 = 0;
-
-
-
-	if (s1 == NULL)
-
-		s1 = "";
+unsigned int index, index2, len1, len2;
 
 
 
-	while (s1[lens1])
+if (s1 == 0)
 
-		lens1++;
+	s1 = "";
 
+if (s2 == 0)
 
+	s2 = "";
 
-	if (s2 == NULL)
+len1 = 0;
 
-		s2 = "";
+while (*(s1 + len1))
 
+	len1++;
 
+len2 = 0;
 
-	while (s2[lens2])
+while (*(s2 + len2))
 
-		lens2++;
+	len2++;
 
+if (n >= len2)
 
+	n = len2;
 
-	if (n >= lens2)
+str = malloc(sizeof(char) * (len1 + n + 1));
 
-		n = lens2;
+if (str == 0)
 
+	return (0);
 
+for (index = 0; index < len1; index++)
 
-	new_str = malloc(lens1 + n + 1);
+	*(str + index) = *(s1 + index);
 
-	if (new_str == NULL)
+for (index2 = 0; index2 < n; index2++, index++)
 
-		return (NULL);
+	*(str + index) = *(s2 + index2);
 
+*(str + index) = '\0';
 
-
-	for (; i < (lens1 + n); i++)
-
-	{
-
-		if (i < lens1)
-
-			new_str[i] = *s1, s1++;
-
-		else
-
-			new_str[i] = *s2, s2++;
-
-	}
-
-	new_str[i] = '\0';
-
-	return (new_str);
+return (str);
 
 }
